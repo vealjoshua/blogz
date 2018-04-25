@@ -2,18 +2,6 @@
 
 {% block content %}
 
-    <div align="center">
-        <h1>Build a Blog</h1>
-    </div>
 
-    {% if blogs|length == 0 %}
-        <p>No blog posts yet.</p>
-    {% else %}
-        {% for blog in blogs %}
-            <h1><a href="blog?id={{blog.id}}">{{blog.title}}</a></h1>
-            <p>{{blog.body}}</p>
-            <hr>
-        {% endfor %}
-    {% endif %}
 
 {% endblock %}
