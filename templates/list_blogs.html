@@ -2,9 +2,7 @@
 
 {% block content %}
 
-    <div align="center">
-        <h1>Build a Blog</h1>
-    </div>
+    <h1>blog posts!</h1>
 
     {% if blogs|length == 0 %}
         <p>No blog posts yet.</p>
@@ -12,6 +10,7 @@
         {% for blog in blogs %}
             <h1><a href="blog?id={{blog.id}}">{{blog.title}}</a></h1>
             <p>{{blog.body}}</p>
+            <p><sub><i>Written by <a href="blog?user={{blog.user_id}}">{{users[blog.user_id - 1].username}}</a></i></sub></p>
             <hr>
         {% endfor %}
     {% endif %}

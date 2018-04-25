@@ -39,16 +39,24 @@ def require_login():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+        users = User.query.all()
+        return render_template('index.html', blog_users=users)
 
 @app.route('/blog', methods=['GET'])
 def blog():
     if len(request.args) > 0:
-        blog = Blog.query.get(request.args.get("id"))
-        return render_template('individual_blog.html', blog=blog)
+        if request.args.get("id"):
+            blog = Blog.query.get(request.args.get("id"))
+            user = User.query.get(blog.user_id)
+            return render_template('individual_blog.html', blog=blog, user=user)
+        elif request.args.get("user"):
+            user = User.query.get(request.args.get("user"))
+            blogs = Blog.query.filter_by(user_id=user.id).all()
+            return render_template('single_user.html', blogs=blogs, user=user)
     else:
+        users = User.query.all()
         blogs = Blog.query.all()
-        return render_template('list_blogs.html', blogs=blogs)
+        return render_template('list_blogs.html', blogs=blogs, users=users)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
